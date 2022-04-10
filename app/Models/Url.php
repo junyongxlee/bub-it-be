@@ -13,4 +13,9 @@ class Url extends Model
         'destination_url',
         'alias'
     ];
+
+    protected $hidden = [
+        'id',
+        'updated_at'
+    ];
 }

@@ -10,8 +10,13 @@ class UrlClick extends Model
     use HasFactory;
 
     protected $fillable = [
-        'url_id',
+        'url_alias',
         'location',
         'created_at'
+    ];
+
+    protected $hidden = [
+        'id',
+        'updated_at'
     ];
 }

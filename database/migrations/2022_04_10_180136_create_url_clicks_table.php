@@ -15,7 +15,7 @@ class CreateUrlClicksTable extends Migration
     {
         Schema::create('url_clicks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('url_alias');
+            $table->string('url_alias');
             $table->foreign('url_alias')->references('alias')->on('urls');
             $table->string('location')->nullable();
             $table->timestamps();

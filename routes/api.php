@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UrlController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'url',
+    'as' => 'url.'
+], function () {
+    Route::get('', [UrlController::class, 'getUrl']);   
+    Route::get('detail', [UrlController::class, 'getUrlDetails']);   
+    Route::post('', [UrlController::class, 'createUrl']);   
 });
