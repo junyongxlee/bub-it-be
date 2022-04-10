@@ -6,6 +6,7 @@ use App\Models\Url;
 use App\Models\UrlClick;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Stevebauman\Location\Facades\Location;
 
 class UrlController extends Controller
 {
@@ -83,9 +84,20 @@ class UrlController extends Controller
         }
 
         // Update clicks database
+
+        $location = "Unknown";
+        if ($position = Location::get(request()->ip())) {
+            // Successfully retrieved position.
+            $location = $position->countryName;
+        }
+
+        if (request()->ip() == '127.0.0.1') {
+            $location = "Local testing server";
+        }
+
         UrlClick::create([
             'url_alias' => $request->alias,
-            'location' => "testing",
+            'location' => $location,
         ]);
 
         return response()->json([
