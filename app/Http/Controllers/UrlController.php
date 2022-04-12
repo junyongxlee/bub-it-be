@@ -32,6 +32,13 @@ class UrlController extends Controller
         }
 
         if ($request->alias) {
+            if (strtolower($request->alias) == "url") {
+                return response()->json([
+                    'status' => false,
+                    'message' => "This alias is not available."
+                ], 400);
+            }
+
             $checkAlias = Url::where('alias', $request->alias)->first();
 
             if ($checkAlias) {
@@ -106,6 +113,24 @@ class UrlController extends Controller
         return response()->json([
             'status' => true,
             'url' => $url,
+        ], 200);
+    }
+
+    public function getUrls(Request $request)
+    {
+        $check = Validator::make($request->all(), [
+            'aliases' => 'required|array',
+        ]);
+
+        if ($check->fails()) {
+            return response()->json(['status' => false, 'message' => $check->errors()->first()], 400);
+        }
+
+        $urls = Url::whereIn('alias', $request->aliases)->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'status' => true,
+            'urls' => $urls,
         ], 200);
     }
 

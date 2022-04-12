@@ -11,7 +11,8 @@ class Url extends Model
 
     protected $fillable = [
         'destination_url',
-        'alias'
+        'alias',
+        'created_at'
     ];
 
     protected $hidden = [

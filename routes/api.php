@@ -19,7 +19,14 @@ Route::group([
     'prefix' => 'url',
     'as' => 'url.'
 ], function () {
-    Route::get('', [UrlController::class, 'getUrl']);   
-    Route::get('detail', [UrlController::class, 'getUrlDetails']);   
-    Route::post('', [UrlController::class, 'createUrl']);   
+    Route::get('', [UrlController::class, 'getUrl']);
+    Route::get('detail', [UrlController::class, 'getUrlDetails']);
+    Route::post('', [UrlController::class, 'createUrl']);
+});
+
+Route::group([
+    'prefix' => 'urls',
+    'as' => 'urls.'
+], function () {
+    Route::get('', [UrlController::class, 'getUrls']);
 });
