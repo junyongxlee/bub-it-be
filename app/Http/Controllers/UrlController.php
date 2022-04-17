@@ -158,11 +158,21 @@ class UrlController extends Controller
             return response()->json(['status' => false, 'message' => $check->errors()->first()], 400);
         }
 
+        $url = Url::where('alias', $request->alias)->first();
+
+        if ($url == null) {
+            return response()->json([
+                'status' => false,
+                'message' => "Url does not exist."
+            ], 404);
+        }
+
         $urlClicks = UrlClick::where('url_alias', $request->alias)->get();
 
         return response()->json([
             'status' => true,
             'url_clicks' => $urlClicks,
+            'url'=> $url,
         ], 200);
     }
 }
