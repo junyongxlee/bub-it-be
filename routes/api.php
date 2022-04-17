@@ -29,4 +29,5 @@ Route::group([
     'as' => 'urls.'
 ], function () {
     Route::get('', [UrlController::class, 'getUrls']);
+    Route::post('updateTitles', [UrlController::class, 'updateTitles']);
 });

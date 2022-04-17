@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Url;
 use App\Models\UrlClick;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Stevebauman\Location\Facades\Location;
@@ -61,7 +62,8 @@ class UrlController extends Controller
 
         $url = Url::create([
             'destination_url' => $request->destination_url,
-            'alias' => $request->alias
+            'alias' => $request->alias,
+            'title' => $this->getTitleFromUrl($request->destination_url)
         ]);
 
         return response()->json([
@@ -69,6 +71,18 @@ class UrlController extends Controller
             'message' => "URL successfully shortened!",
             'url' => $url,
         ], 200);
+    }
+
+    // Update existing URL's title
+    public function updateTitles(Request $request)
+    {
+        $urls = Url::get();
+
+        foreach ($urls as $singleUrl) {
+            $singleUrl->update(['title' => $this->getTitleFromUrl($singleUrl->destination_url)]);
+        }
+
+        return $urls;
     }
 
     public function getUrl(Request $request)
